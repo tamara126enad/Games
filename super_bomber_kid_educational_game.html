@@ -244,6 +244,7 @@
                 wallColor: "#9b51e0",
                 blockColor: "#ff70a6",
                 floorColor: "#f7d6e0",
+                heroColor: "#ffcc00",
                 enemyColor: "#FF4757",
                 enemySpeed: 1.0,
                 enemyCount: 2,
@@ -261,6 +262,7 @@
                 wallColor: "#2d6a4f",
                 blockColor: "#52b788",
                 floorColor: "#d8f3dc",
+                heroColor: "#52b788",
                 enemyColor: "#2f9e44",
                 enemySpeed: 1.3,
                 enemyCount: 3,
@@ -278,6 +280,7 @@
                 wallColor: "#0077b6",
                 blockColor: "#00b4d8",
                 floorColor: "#caf0f8",
+                heroColor: "#00b4d8",
                 enemyColor: "#9c36b5",
                 enemySpeed: 1.6,
                 enemyCount: 3,
@@ -294,6 +297,7 @@
                 wallColor: "#457b9d",
                 blockColor: "#e63946",
                 floorColor: "#f1faee",
+                heroColor: "#e63946",
                 enemyColor: "#e76f51",
                 enemySpeed: 1.8,
                 enemyCount: 4,
@@ -310,6 +314,7 @@
                 wallColor: "#660099",
                 blockColor: "#ff9900",
                 floorColor: "#ffeb3b",
+                heroColor: "#ff9900",
                 enemyColor: "#7b2cbf",
                 enemySpeed: 2.1,
                 enemyCount: 4,
@@ -339,6 +344,8 @@
         let powerups = [];
         let door = { x: 0, y: 0, unlocked: false };
         let enemies = [];
+        let challengeTiles = [];
+        let challengeSolved = false;
         let player;
         let currentQuiz = null;
 
@@ -379,10 +386,11 @@
                 this.y = tileY * TILE_SIZE + TILE_SIZE / 2;
                 this.radius = TILE_SIZE * 0.38;
                 this.speed = 3.2;
-                this.bombCapacity = 1;
+                this.bombCapacity = 3;
                 this.bombRange = 1;
                 this.activeBombs = 0;
                 this.invulnerable = 0;
+                this.color = LEVELS[currentLevelIdx].heroColor || "#ffcc00";
             }
             update(keys) {
                 let dx = 0;
@@ -422,7 +430,7 @@
                     let ty = Math.floor(p.y / TILE_SIZE);
                     if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return true;
                     // 1 = Solid Wall, 2 = Breakable Box
-                    if (grid[ty][tx] === 1 || grid[ty][tx] === 2) return true;
+                    if (grid[ty][tx] === 1 || grid[ty][tx] === 2 || grid[ty][tx] === 3) return true;
                 }
                 return false;
             }
@@ -435,7 +443,7 @@
                 // Cute Kid Hero Character Drawing
                 ctx.beginPath();
                 ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = "#FFCC00"; // Bright Yellow Helmet
+                ctx.fillStyle = this.color; // Level-specific hero color
                 ctx.fill();
                 ctx.lineWidth = 3;
                 ctx.strokeStyle = "#FFFFFF";
@@ -550,16 +558,16 @@
             grid[1][2] = 0;
             grid[2][1] = 0;
 
-            // Place Exit Door under a random breakable box
-            let placedDoor = false;
-            while (!placedDoor) {
-                let rx = Math.floor(Math.random() * (COLS - 2)) + 1;
-                let ry = Math.floor(Math.random() * (ROWS - 2)) + 1;
-                if (grid[ry][rx] === 2) {
-                    door = { x: rx, y: ry, unlocked: false };
-                    placedDoor = true;
-                }
+            // Always-visible exit door on a clear tile; all boxes are optional.
+            const doorSpots = [{ x: COLS - 2, y: ROWS - 2 }, { x: 1, y: ROWS - 2 }, { x: COLS - 2, y: 1 }, { x: 1, y: 1 }];
+            door = { ...doorSpots[levelIdx % doorSpots.length], unlocked: false };
+            grid[door.y][door.x] = 0;
+            // Green challenge boxes contain a math or multiple-choice challenge.
+            challengeTiles = [];
+            for (let r = 1; r < ROWS - 1; r++) for (let c = 1; c < COLS - 1; c++) {
+                if (grid[r][c] === 2 && (r + c + levelIdx) % 4 === 0) { grid[r][c] = 3; challengeTiles.push({ x: c, y: r }); }
             }
+            challengeSolved = false;
 
             // Spawn Player & Enemies
             player = new Player();
@@ -622,7 +630,8 @@
                     });
 
                     // Destroy breakable box
-                    if (grid[ty][tx] === 2) {
+                    if (grid[ty][tx] === 2 || grid[ty][tx] === 3) {
+                        const isChallenge = grid[ty][tx] === 3;
                         grid[ty][tx] = 0;
                         score += 20;
                         document.getElementById('score-val').innerText = score;
@@ -641,6 +650,7 @@
                                 type: types[Math.floor(Math.random() * types.length)]
                             });
                         }
+                        if (isChallenge && !challengeSolved && gameState === 'PLAYING') setTimeout(() => triggerQuiz(), 180);
                         break; // Stop blast in this direction after hitting box
                     }
                 }
@@ -695,6 +705,7 @@
                 score += 100;
                 document.getElementById('score-val').innerText = score;
                 door.unlocked = true;
+                challengeSolved = true;
                 
                 // Show victory result screen
                 showResultScreen(
@@ -825,14 +836,12 @@
 
             if (pTileX === door.x && pTileY === door.y && grid[door.y][door.x] === 0) {
                 if (!door.unlocked) {
-                    triggerQuiz();
+                    if (!challengeSolved) triggerQuiz();
+                    else showResultScreen("🛡️ اهزم الوحوش أولاً", `بقي ${enemies.length} وحشاً. استخدم القنابل ثم عد إلى البوابة.`, "العودة للمعركة", false);
+                } else if (enemies.length === 0) {
+                    showResultScreen("🌟 مرحلة مكتملة!", "أحسنت صنعاً! فجّرت التحديات والوحوش ثم هربت عبر البوابة.", "المستوى التالي ➔", true);
                 } else {
-                    showResultScreen(
-                        "🌟 مرحلة مكتملة!",
-                        "أحسنت صنعاً! اضغط للانتقال إلى المستوى التالي.",
-                        "المستوى التالي ➔",
-                        true
-                    );
+                    showResultScreen("🛡️ اهزم الوحوش أولاً", `بقي ${enemies.length} وحشاً. استخدم القنابل ثم عد إلى البوابة.`, "العودة للمعركة", false);
                 }
             }
 
@@ -878,9 +887,9 @@
                         ctx.fill();
                         ctx.strokeStyle = "#ffffff33";
                         ctx.stroke();
-                    } else if (grid[r][c] === 2) {
-                        // Soft Breakable Box
-                        ctx.fillStyle = level.blockColor;
+                    } else if (grid[r][c] === 2 || grid[r][c] === 3) {
+                        // Soft Breakable Box / Educational Challenge Box
+                        ctx.fillStyle = grid[r][c] === 3 ? "#22c55e" : level.blockColor;
                         ctx.beginPath();
                         ctx.roundRect(x + 3, y + 3, TILE_SIZE - 6, TILE_SIZE - 6, 12);
                         ctx.fill();
@@ -889,6 +898,13 @@
                         ctx.fillStyle = "#FFD700";
                         ctx.fillRect(x + TILE_SIZE/2 - 3, y + 3, 6, TILE_SIZE - 6);
                         ctx.fillRect(x + 3, y + TILE_SIZE/2 - 3, TILE_SIZE - 6, 6);
+                        if (grid[r][c] === 3) {
+                            ctx.fillStyle = "#ffffff";
+                            ctx.font = "bold 18px sans-serif";
+                            ctx.textAlign = "center";
+                            ctx.textBaseline = "middle";
+                            ctx.fillText("?", x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+                        }
                     } else {
                         // Empty Floor Pattern
                         ctx.fillStyle = level.floorColor;
