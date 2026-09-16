@@ -101,7 +101,7 @@
             <div id="start-screen" class="absolute inset-0 bg-slate-900/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center text-white z-20">
                 <div class="text-6xl mb-4 floating">🚀</div>
                 <h2 class="text-3xl md:text-5xl font-black text-yellow-300 mb-2">مغامرة الألوان والمعرفة</h2>
-                <p class="text-base md:text-xl text-indigo-200 mb-6 max-w-md">ضع قنابل الألوان السحرية، افجر الصناديق، وحل الألغاز التعليمية للوصول إلى بوابة النصر!</p>
+                <p class="text-base md:text-xl text-indigo-200 mb-6 max-w-md">ضع قنابل الألوان السحرية، افجر بعض الصناديق فقط، ثم اعثر على البوابة وحل اللغز التعليمي للوصول إلى النصر!</p>
                 <button onclick="startGame()" class="btn-bounce bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 font-black text-xl md:text-2xl px-10 py-4 rounded-full shadow-lg border-4 border-white">
                     ابدأ اللعب الآن 🎮
                 </button>
@@ -244,12 +244,14 @@
                 wallColor: "#9b51e0",
                 blockColor: "#ff70a6",
                 floorColor: "#f7d6e0",
+                enemyColor: "#FF4757",
                 enemySpeed: 1.0,
                 enemyCount: 2,
                 themeEmoji: "🍬",
                 quizzes: [
                     { q: "ما نتيجة: 2 + 3 ؟", options: ["5", "4", "6", "3"], correct: "5" },
-                    { q: "كم عدد أضلاع المربع؟", options: ["4", "3", "5", "6"], correct: "4" }
+                    { q: "كم عدد أضلاع المربع؟", options: ["4", "3", "5", "6"], correct: "4" },
+                    { q: "ما نتيجة: 12 ÷ 3 ؟", options: ["3", "4", "5", "6"], correct: "4" }
                 ]
             },
             {
@@ -259,12 +261,14 @@
                 wallColor: "#2d6a4f",
                 blockColor: "#52b788",
                 floorColor: "#d8f3dc",
+                enemyColor: "#2f9e44",
                 enemySpeed: 1.3,
                 enemyCount: 3,
                 themeEmoji: "🦁",
                 quizzes: [
                     { q: "أي من هذه الحيوانات يطير؟", options: ["العصفور", "الأسد", "الفيل", "الكلب"], correct: "العصفور" },
-                    { q: "ما نتيجة: 10 - 4 ؟", options: ["6", "5", "7", "4"], correct: "6" }
+                    { q: "ما نتيجة: 10 - 4 ؟", options: ["6", "5", "7", "4"], correct: "6" },
+                    { q: "ما نتيجة: 18 ÷ 3 ؟", options: ["5", "6", "7", "8"], correct: "6" }
                 ]
             },
             {
@@ -274,6 +278,7 @@
                 wallColor: "#0077b6",
                 blockColor: "#00b4d8",
                 floorColor: "#caf0f8",
+                enemyColor: "#9c36b5",
                 enemySpeed: 1.6,
                 enemyCount: 3,
                 themeEmoji: "🐙",
@@ -289,6 +294,7 @@
                 wallColor: "#457b9d",
                 blockColor: "#e63946",
                 floorColor: "#f1faee",
+                enemyColor: "#e76f51",
                 enemySpeed: 1.8,
                 enemyCount: 4,
                 themeEmoji: "🚀",
@@ -304,6 +310,7 @@
                 wallColor: "#660099",
                 blockColor: "#ff9900",
                 floorColor: "#ffeb3b",
+                enemyColor: "#7b2cbf",
                 enemySpeed: 2.1,
                 enemyCount: 4,
                 themeEmoji: "👑",
@@ -466,6 +473,7 @@
                 this.dirX = Math.random() < 0.5 ? 1 : -1;
                 this.dirY = Math.random() < 0.5 ? 1 : -1;
                 this.changeDirTimer = 0;
+                this.color = LEVELS[currentLevelIdx].enemyColor || "#FF4757";
             }
             update() {
                 this.changeDirTimer++;
@@ -498,7 +506,7 @@
                 // Playful Monster Slime Drawing
                 ctx.beginPath();
                 ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = "#FF4757"; // Friendly Red Slime
+                ctx.fillStyle = this.color; // Color varies by level
                 ctx.fill();
 
                 // Funny Big Eyes
