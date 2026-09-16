@@ -251,8 +251,10 @@
                 themeEmoji: "🍬",
                 quizzes: [
                     { q: "ما نتيجة: 2 + 3 ؟", options: ["5", "4", "6", "3"], correct: "5" },
-                    { q: "كم عدد أضلاع المربع؟", options: ["4", "3", "5", "6"], correct: "4" },
-                    { q: "ما نتيجة: 12 ÷ 3 ؟", options: ["3", "4", "5", "6"], correct: "4" }
+                    { q: "ما نتيجة: 9 - 4 ؟", options: ["4", "5", "6", "7"], correct: "5" },
+                    { q: "ما نتيجة: 3 × 2 ؟", options: ["5", "6", "7", "8"], correct: "6" },
+                    { q: "ما نتيجة: 12 ÷ 3 ؟", options: ["3", "4", "5", "6"], correct: "4" },
+                    { q: "كم عدد أضلاع المربع؟", options: ["4", "3", "5", "6"], correct: "4" }
                 ]
             },
             {
@@ -268,9 +270,11 @@
                 enemyCount: 3,
                 themeEmoji: "🦁",
                 quizzes: [
+                    { q: "أي حيوان يعيش في الماء؟", options: ["السمكة", "الأسد", "الحصان", "القطة"], correct: "السمكة" },
                     { q: "أي من هذه الحيوانات يطير؟", options: ["العصفور", "الأسد", "الفيل", "الكلب"], correct: "العصفور" },
-                    { q: "ما نتيجة: 10 - 4 ؟", options: ["6", "5", "7", "4"], correct: "6" },
-                    { q: "ما نتيجة: 18 ÷ 3 ؟", options: ["5", "6", "7", "8"], correct: "6" }
+                    { q: "ماذا يأكل الأرنب غالباً؟", options: ["الجزر", "الحجارة", "الثلج", "الرمل"], correct: "الجزر" },
+                    { q: "أي حيوان له خرطوم طويل؟", options: ["الفيل", "السمكة", "النحلة", "العصفور"], correct: "الفيل" },
+                    { q: "أين يعيش الأسد؟", options: ["الغابة", "البحر", "الفضاء", "الثلاجة"], correct: "الغابة" }
                 ]
             },
             {
@@ -286,8 +290,11 @@
                 enemyCount: 3,
                 themeEmoji: "🐙",
                 quizzes: [
-                    { q: "ما هو لون الموز النضج؟", options: ["أصفر", "أزرق", "أحمر", "أسود"], correct: "أصفر" },
-                    { q: "ما نتيجة: 4 × 2 ؟", options: ["8", "6", "10", "4"], correct: "8" }
+                    { q: "ما الغاز الذي نتنفسه؟", options: ["الأكسجين", "الذهب", "الرمل", "الخشب"], correct: "الأكسجين" },
+                    { q: "ما هو لون الموز الناضج؟", options: ["أصفر", "أزرق", "أحمر", "أسود"], correct: "أصفر" },
+                    { q: "ما الذي تحتاجه النبتة لتنمو؟", options: ["الماء", "الحجارة فقط", "الدخان", "الظلام فقط"], correct: "الماء" },
+                    { q: "أي عضو نستخدمه للرؤية؟", options: ["العين", "الأذن", "اليد", "القدم"], correct: "العين" },
+                    { q: "أي حيوان يضع البيض؟", options: ["الدجاجة", "القطة", "الحصان", "الأرنب"], correct: "الدجاجة" }
                 ]
             },
             {
@@ -304,7 +311,10 @@
                 themeEmoji: "🚀",
                 quizzes: [
                     { q: "أي كوكب نعيش عليه؟", options: ["الأرض", "المريخ", "الشمس", "القمر"], correct: "الأرض" },
-                    { q: "ما نتيجة: 15 + 5 ؟", options: ["20", "25", "18", "30"], correct: "20" }
+                    { q: "ما الذي يضيء في النهار؟", options: ["الشمس", "القمر", "النجم", "السحابة"], correct: "الشمس" },
+                    { q: "ما اسم الكوكب الأحمر؟", options: ["المريخ", "الأرض", "زحل", "عطارد"], correct: "المريخ" },
+                    { q: "ماذا نرى في السماء ليلاً؟", options: ["النجوم", "قوس قزح فقط", "الشجرة", "البحر"], correct: "النجوم" },
+                    { q: "ما الذي يدور حول الأرض؟", options: ["القمر", "الكرسي", "البحر", "الجبل"], correct: "القمر" }
                 ]
             },
             {
@@ -321,6 +331,9 @@
                 themeEmoji: "👑",
                 quizzes: [
                     { q: "كم عدد ألوان قوس قزح؟", options: ["7", "5", "10", "3"], correct: "7" },
+                    { q: "ما عكس كلمة كبير؟", options: ["صغير", "طويل", "سريع", "جميل"], correct: "صغير" },
+                    { q: "ما جمع كلمة كتاب؟", options: ["كتب", "كاتبان", "كاتب", "مكتبة"], correct: "كتب" },
+                    { q: "أي كلمة تبدأ بحرف م؟", options: ["موز", "تفاح", "باب", "قلم"], correct: "موز" },
                     { q: "ما نتيجة: 9 - 3 + 2 ؟", options: ["8", "7", "6", "9"], correct: "8" }
                 ]
             }
@@ -345,6 +358,7 @@
         let door = { x: 0, y: 0, unlocked: false };
         let enemies = [];
         let challengeTiles = [];
+        let solvedChallenges = [];
         let challengeSolved = false;
         let player;
         let currentQuiz = null;
@@ -565,8 +579,11 @@
             // Green challenge boxes contain a math or multiple-choice challenge.
             challengeTiles = [];
             for (let r = 1; r < ROWS - 1; r++) for (let c = 1; c < COLS - 1; c++) {
-                if (grid[r][c] === 2 && (r + c + levelIdx) % 4 === 0) { grid[r][c] = 3; challengeTiles.push({ x: c, y: r }); }
+                if (grid[r][c] === 2 && (r + c + levelIdx) % 4 === 0 && !(c === door.x && r === door.y)) challengeTiles.push({ x: c, y: r });
             }
+            challengeTiles.slice(0, 5).forEach(tile => { grid[tile.y][tile.x] = 3; });
+            challengeTiles = challengeTiles.slice(0, 5);
+            solvedChallenges = [];
             challengeSolved = false;
 
             // Spawn Player & Enemies
@@ -650,7 +667,7 @@
                                 type: types[Math.floor(Math.random() * types.length)]
                             });
                         }
-                        if (isChallenge && !challengeSolved && gameState === 'PLAYING') setTimeout(() => triggerQuiz(), 180);
+                        if (isChallenge && gameState === 'PLAYING' && solvedChallenges.length < LEVELS[currentLevelIdx].quizzes.length) setTimeout(() => triggerQuiz(), 180);
                         break; // Stop blast in this direction after hitting box
                     }
                 }
@@ -678,9 +695,10 @@
         }
 
         function triggerQuiz() {
+            if (gameState === 'QUIZ' || solvedChallenges.length >= LEVELS[currentLevelIdx].quizzes.length) return;
             gameState = 'QUIZ';
             const level = LEVELS[currentLevelIdx];
-            currentQuiz = level.quizzes[Math.floor(Math.random() * level.quizzes.length)];
+            currentQuiz = level.quizzes[solvedChallenges.length];
 
             document.getElementById('quiz-question').innerText = currentQuiz.q;
             const optionsContainer = document.getElementById('quiz-options');
@@ -699,21 +717,21 @@
 
         function submitQuizAnswer(selected) {
             document.getElementById('quiz-modal').classList.add('hidden');
+            const level = LEVELS[currentLevelIdx];
 
             if (selected === currentQuiz.correct) {
                 sound.correct();
                 score += 100;
                 document.getElementById('score-val').innerText = score;
-                door.unlocked = true;
-                challengeSolved = true;
-                
-                // Show victory result screen
-                showResultScreen(
-                    "🎉 إجابة رائعة وصحيحة!",
-                    `ممتاز جداً! انفتحت البوابة السحرية الآن للوصول للمستوى التالي!`,
-                    "واصل المغامرة ➔",
-                    true
-                );
+                solvedChallenges.push(currentQuiz);
+                challengeSolved = solvedChallenges.length === level.quizzes.length;
+                door.unlocked = challengeSolved;
+                gameState = 'PLAYING';
+                const remaining = level.quizzes.length - solvedChallenges.length;
+                document.getElementById('result-title').innerText = remaining ? "✅ تحدٍ مكتمل!" : "🏆 كل التحديات مكتملة!";
+                document.getElementById('result-desc').innerText = remaining ? `أحسنت! بقي ${remaining} تحديات. واصل تفجير الصناديق ثم الوحوش.` : "حللت الأسئلة الخمسة! الآن فجّر الوحوش واهرب عبر البوابة.";
+                document.getElementById('result-btn').innerText = "العودة للمرحلة";
+                document.getElementById('result-modal').classList.remove('hidden');
             } else {
                 sound.wrong();
                 showResultScreen(
@@ -835,13 +853,12 @@
             let pTileY = Math.floor(player.y / TILE_SIZE);
 
             if (pTileX === door.x && pTileY === door.y && grid[door.y][door.x] === 0) {
-                if (!door.unlocked) {
-                    if (!challengeSolved) triggerQuiz();
-                    else showResultScreen("🛡️ اهزم الوحوش أولاً", `بقي ${enemies.length} وحشاً. استخدم القنابل ثم عد إلى البوابة.`, "العودة للمعركة", false);
+                if (solvedChallenges.length < LEVELS[currentLevelIdx].quizzes.length) {
+                    triggerQuiz();
                 } else if (enemies.length === 0) {
-                    showResultScreen("🌟 مرحلة مكتملة!", "أحسنت صنعاً! فجّرت التحديات والوحوش ثم هربت عبر البوابة.", "المستوى التالي ➔", true);
+                    showResultScreen("🌟 مرحلة مكتملة!", "حللت التحديات الخمسة وفجّرت الوحوش ثم هربت بنجاح.", "المستوى التالي ➔", true);
                 } else {
-                    showResultScreen("🛡️ اهزم الوحوش أولاً", `بقي ${enemies.length} وحشاً. استخدم القنابل ثم عد إلى البوابة.`, "العودة للمعركة", false);
+                    showResultScreen("🛡️ أكمل الهروب", `حللت كل الأسئلة! بقي ${enemies.length} وحشاً. فجّرهم ثم عد إلى البوابة.`, "العودة للمعركة", false);
                 }
             }
 
